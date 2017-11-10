@@ -99,7 +99,7 @@ body.on('update', function() {
 
 
 
-//CYNAMON
+//DYNAMON
 var AWS = require("aws-sdk");
 
 AWS.config.update({
@@ -124,70 +124,70 @@ var paramsCreatePosts = {
     }
 };''
 //Tabela Posts criada
-// dynamodb.createTable(paramsCreatePosts, function(err, data) {
-//     if (err) {
-//         console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-//     } else {
-//         console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
-//     }
-// });
+dynamodb.createTable(paramsCreatePosts, function(err, data) {
+    if (err) {
+        console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
+    }
+});
 
 console.log("Importing Posts into DynamoDB. Please wait.");
 setTimeout(function(){
   //Popula a tablema Post com os items da página do IFPE
-  // listPostsIFPE.forEach(function(post) {
-  //     var params = {
-  //         TableName: "Posts",
-  //         Item: {
-  //             "title": post.title,
-  //             "body":  post.body
-  //         }
-  //     };
-  //     docClient.put(params, function(err, data) {
-  //        if (err) {
-  //            console.error("Unable to add movie", post.title, ". Error JSON:", JSON.stringify(err, null, 2));
-  //        } else {
-  //            console.log("PutItem succeeded:", post.title);
-  //        }
-  //     });
-  // });
+  listPostsIFPE.forEach(function(post) {
+      var params = {
+          TableName: "Posts",
+          Item: {
+              "title": post.title,
+              "body":  post.body
+          }
+      };
+      docClient.put(params, function(err, data) {
+         if (err) {
+             console.error("Unable to add movie", post.title, ". Error JSON:", JSON.stringify(err, null, 2));
+         } else {
+             console.log("PutItem succeeded:", post.title);
+         }
+      });
+  });
 
 
-  console.log("Querying for movies from 1992 - titles A-L, with genres and lead actor");
+//console.log("Querying for movies from 1992 - titles A-L, with genres and lead actor");
 
-var params = {
-    TableName : "Movies",
+// var params = {
+//     TableName : "Movies",
 
-    //Valores que vão ser retornados
-    ProjectionExpression:"#yr, title, info.genres, info.actors[0]",
+//     //Valores que vão ser retornados
+//     ProjectionExpression:"#yr, title, info.genres, info.actors[0]",
 
-    //condições da consulta
-    KeyConditionExpression: "#yr = :yyyy and title between :letter1 and :letter2",
+//     //condições da consulta
+//     KeyConditionExpression: "#yr = :yyyy and title between :letter1 and :letter2",
 
-    //nomeia a variável 'year' para '#yr' pois
-    //'year' é uma palavra reservada
-    ExpressionAttributeNames:{
-        "#yr": "year"
-    },
+//     //nomeia a variável 'year' para '#yr' pois
+//     //'year' é uma palavra reservada
+//     ExpressionAttributeNames:{
+//         "#yr": "year"
+//     },
 
-    //
-    ExpressionAttributeValues: {
-        ":yyyy":1992,
-        ":letter1": "A",
-        ":letter2": "L"
-    }
-};
+//     //
+//     ExpressionAttributeValues: {
+//         ":yyyy":1992,
+//         ":letter1": "A",
+//         ":letter2": "L"
+//     }
+// };
 
-docClient.query(params, function(err, data) {
-    if (err) {
-        console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("Query succeeded.");
-        data.Items.forEach(function(item) {
-            console.log(item.title);
-        });
-    }
-});
+// docClient.query(params, function(err, data) {
+//     if (err) {
+//         console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
+//     } else {
+//         console.log("Query succeeded.");
+//         data.Items.forEach(function(item) {
+//             console.log(item.title);
+//         });
+//     }
+// });
 
 
 },10000);
