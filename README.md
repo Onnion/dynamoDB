@@ -1,27 +1,21 @@
 # dynamoDB
 
--download dynamoDB local version:
+-download dynamoDB local version:  
  http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html#DynamoDBLocal.DownloadingAndRunning
 
 -install java jre in your so version
 
 -run in folder of your dynamoDB local version
 ```
-
 $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
-
 ```
 
-install node modules
+-install node modules
 ```
-
 $ npm install
-
 ```
 
-run teste.js
+-run teste.js
 ```
-
 $ node teste.js
-
 ```
