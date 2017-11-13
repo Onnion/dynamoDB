@@ -15,6 +15,13 @@ $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 $ npm install
 ```
 
+## Restore DB
+### The DB is not provide
+```
+mongorestore --drop -d db_name ./ db_path
+```
+
+
 ## For dynamoose exemples
 -install dynamosse
 ```
@@ -26,12 +33,6 @@ $ npm install dynamoose
 export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
 export AWS_REGION="sa-east-1"
-```
-
-## Restore DB
-### The DB is not provide
-```
-mongorestore --drop -d db_name ./ db_path
 ```
 
 -run createCompanies.js
