@@ -65,8 +65,6 @@ request(options, callback);
 // CHEERIO
 var EventEmitter = require("events").EventEmitter;
 var body = new EventEmitter();
-var fs = require('fs');
-var stream = fs.createWriteStream("posts.json");
 const cheerio = require('cheerio');
 function requestIfpeHTML(){
 	request('http://www.ifpe.edu.br/noticias', function (error, response, data) {
@@ -74,6 +72,7 @@ function requestIfpeHTML(){
 		body.emit('update');
 	});
 }
+
 //requisição a página do ifpe
 requestIfpeHTML();
 var listPostsIFPE = []
@@ -96,8 +95,6 @@ body.on('update', function() {
   //   stream.end();
   // });
 });
-
-
 
 //DYNAMON
 var AWS = require("aws-sdk");
@@ -122,63 +119,90 @@ var paramsCreatePosts = {
         ReadCapacityUnits: 10,
         WriteCapacityUnits: 10
     }
-};''
-//Tabela Posts criada
-dynamodb.createTable(paramsCreatePosts, function(err, data) {
-    if (err) {
-        console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
+};
+var paramsCreateAirport = {
+    TableName : "Posts",
+    KeySchema: [
+        { AttributeName: "title", KeyType: "HASH"},  //Partition key
+        { AttributeName: "body", KeyType: "RANGE" }  //Sort key
+    ],
+    AttributeDefinitions: [
+        { AttributeName: "title", AttributeType: "S" },
+        { AttributeName: "body", AttributeType: "S" }
+    ],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 10,
+        WriteCapacityUnits: 10
     }
-});
+};
 
-console.log("Importing Posts into DynamoDB. Please wait.");
-setTimeout(function(){
-  //Popula a tablema Post com os items da página do IFPE
-  listPostsIFPE.forEach(function(post) {
-      var params = {
-          TableName: "Posts",
-          Item: {
-              "title": post.title,
-              "body":  post.body
-          }
-      };
-      docClient.put(params, function(err, data) {
-         if (err) {
-             console.error("Unable to add movie", post.title, ". Error JSON:", JSON.stringify(err, null, 2));
-         } else {
-             console.log("PutItem succeeded:", post.title);
-         }
-      });
-  });
-
-
-//console.log("Querying for movies from 1992 - titles A-L, with genres and lead actor");
-
-// var params = {
-//     TableName : "Movies",
-
-//     //Valores que vão ser retornados
-//     ProjectionExpression:"#yr, title, info.genres, info.actors[0]",
-
-//     //condições da consulta
-//     KeyConditionExpression: "#yr = :yyyy and title between :letter1 and :letter2",
-
-//     //nomeia a variável 'year' para '#yr' pois
-//     //'year' é uma palavra reservada
-//     ExpressionAttributeNames:{
-//         "#yr": "year"
-//     },
-
-//     //
-//     ExpressionAttributeValues: {
-//         ":yyyy":1992,
-//         ":letter1": "A",
-//         ":letter2": "L"
+//Tabela Posts criada
+// dynamodb.createTable(paramsCreatePosts, function(err, data) {
+//     if (err) {
+//         console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
+//     } else {
+//         console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
 //     }
-// };
+// });
 
-// docClient.query(params, function(err, data) {
+console.log("Scam all posts...");
+setTimeout(function(){
+
+//Popula a tablema Post com os items da página do IFPE
+  // listPostsIFPE.forEach(function(post) {
+  //     var params = {
+  //         TableName: "Posts",
+  //         Item: {
+  //             "title": post.title,
+  //             "body":  post.body
+  //         }
+  //     };
+  //     docClient.put(params, function(err, data) {
+  //        if (err) {
+  //            console.error("Unable to add movie", post.title, ". Error JSON:", JSON.stringify(err, null, 2));
+  //        } else {
+  //            console.log("PutItem succeeded:", post.title);
+  //        }
+  //     });
+  // });
+
+var paramsQuery = {
+    TableName : "Posts",
+
+    //Valores que vão ser retornados
+    ProjectionExpression:"#title, #body",
+
+    //condições da consulta
+    KeyConditionExpression: "#title = :ff",
+
+    //nomeia a variável 'year' para '#yr' pois
+    //'year' é uma palavra reservada
+    ExpressionAttributeNames:{
+        "#title": "title",
+        "#body": "body"
+    },
+
+    //atribui valores para as variáveis usadas no conditionExpression
+    ExpressionAttributeValues: {
+        ":ff": "Abertas as inscrições para Bolsas Eiffel"
+    },
+    Limit: 2
+};
+var paramsScan = {
+    TableName: "Posts",
+    ProjectionExpression: "#title, #body",
+    ExpressionAttributeNames: {
+        "#title": "title",
+        "#body": "body"
+    },
+    FilterExpression: "begins_with ( #title, :letter1 )",
+    ExpressionAttributeValues: {
+        ":letter1": "A"
+    }
+};
+
+//query for a especific post
+// docClient.query(paramsQuery, function(err, data) {
 //     if (err) {
 //         console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
 //     } else {
@@ -189,5 +213,26 @@ setTimeout(function(){
 //     }
 // });
 
-
-},10000);
+//query for all posts
+docClient.scan(paramsScan, onScan);
+function onScan(err, data) {
+    if (err) {
+        console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        // print all the movies
+        console.log("Scan succeeded.");
+        data.Items.forEach(function(post) {
+           console.log(post.title + ": ");
+           console.log(post.body);
+           console.log('-------------------------------------');
+        });
+        // continue scanning if we have more movies, because
+        // scan can retrieve a maximum of 1MB of data
+        if (typeof data.LastEvaluatedKey != "undefined") {
+            console.log("Scanning for more...");
+            params.ExclusiveStartKey = data.LastEvaluatedKey;
+            docClient.scan(paramsScan, onScan);
+        }
+    }
+}
+},8000);

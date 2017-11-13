@@ -14,7 +14,32 @@ $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 ```
 $ npm install
 
+## For dynamoose exemples
+-install dynamosse
+```
+$ npm install dynamoose
+```
 
+-export aws variables
+```
+export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
+export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
+export AWS_REGION="sa-east-1"
+```
+
+## Restore DB
+### The DB is not provide
+```
+mongorestore --drop -d db_name ./ db_path
+```
+
+-run createCompanies.js
+```
+$ node createCompanies.js
+```
+
+
+## For pure-sdk exemples
 -configure your aws keys
 ```
 $ aws configure
@@ -23,7 +48,7 @@ AWS Secret Access Key [None]: YOUR_SECRET_KEY
 Default region name [None]: sa-east-1
 Default output format [None]: json
 ```
-us-west-2
+
 -run teste.js
 ```
 $ node teste.js
