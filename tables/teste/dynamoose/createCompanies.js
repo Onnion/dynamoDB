@@ -3,7 +3,7 @@ var Schema = dynamoose.Schema;
 var itensToPopulate = require( "../jsonTable.json" )
 
 // Create Companie Schema
-var companieSchema =  new Schema({
+var testeSchema =  new Schema({
   id : {
     type: String,
     hashKey: true
@@ -13,6 +13,7 @@ var companieSchema =  new Schema({
   },
   created_at :  {
     type: String,
+    rangeKey: true
   },
   name :  {
     type: String,
@@ -23,22 +24,22 @@ var companieSchema =  new Schema({
 });
 
 // Create Companie Model
-var Companie = dynamoose.model('Companie', companieSchema);
+var Teste = dynamoose.model('Teste', testeSchema);
 
-// Populate Table Companie
-// itensToPopulate.forEach(function(comp) {
-//   // Create a new Companie object
-//   var companie = new Companie({
-//     id : comp.id,
-//     updated_at :  comp.updated_at,
-//     created_at :  comp.created_at,
-//     name :  comp.name,
-//     code :  comp.code,
-//   });
+//Populate Table Companie
+itensToPopulate.forEach(function(comp) {
+  // Create a new Companie object
+  var companie = new Teste({
+    id : comp.id,
+    updated_at :  comp.updated_at,
+    created_at :  comp.created_at,
+    name :  comp.name,
+    code :  comp.code,
+  });
 
-//   // Save to DynamoDB
-//   companie.save();
-// });
+  // Save to DynamoDB
+  companie.save();
+});
 
 // Get
 function companieGet(idvar){
@@ -61,18 +62,22 @@ function companieGet(idvar){
 }
 
 // Scan
-function companieScan(data1, data2){
+function companieScan(){
   var filter = {
-    FilterExpression: 'created_at between :date1 AND :date2',
+    ProjectionExpression: "#id, created_at",
+    FilterExpression: '#code = :code',
     ExpressionAttributeValues: {
-      ':date1': data1,
-      ':date2': data2
-    }
+      ':code': 'tt'
+    },
+    ExpressionAttributeNames: {
+        "#id": "id",
+        '#code': 'code'
+    },
   }
 
-  Companie.scan(filter).not().exec()
-  .then(function(companie) {
-    console.log(companie);
+  Teste.scan(filter).not().exec()
+  .then(function(companies) {
+    console.log(companies);
   })
   .catch(function(err) {
     console.error(err);
@@ -80,5 +85,5 @@ function companieScan(data1, data2){
 };
 
 
-companieScan('2017-03-10T19:20:29.257Z','2017-12-12T19:20:59.254Z');
+companieScan();
 //companieGet('58d02b9b7a343d148a8f7a30');

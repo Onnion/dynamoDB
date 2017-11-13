@@ -3,7 +3,7 @@ var Schema = dynamoose.Schema;
 var itensToPopulate = require( "../jsonTable.json" )
 
 // Create Companie Schema
-var companieSchema =  new Schema({
+var airportSchema =  new Schema({
   id : {
     type: String,
     hashKey: true
@@ -14,31 +14,49 @@ var companieSchema =  new Schema({
   created_at :  {
     type: String,
   },
+  iata :  {
+    type: String,
+  },
   name :  {
     type: String,
   },
-  code :  {
+  city :  {
     type: String,
+  },
+  country :  {
+    type: String,
+  },
+  country_code :  {
+    type: String,
+  },
+  search_code :  {
+    type: String,
+  },
+  is_mac_code :  {
+    type: Boolean,
+  },
+  has_amadeus :  {
+    type: Boolean,
   }
 });
 
 // Create Companie Model
-var Companie = dynamoose.model('Companie', companieSchema);
+var Airport = dynamoose.model('Airport', airportSchema);
 
 // Populate Table Companie
-// itensToPopulate.forEach(function(comp) {
-//   // Create a new Companie object
-//   var companie = new Companie({
-//     id : comp.id,
-//     updated_at :  comp.updated_at,
-//     created_at :  comp.created_at,
-//     name :  comp.name,
-//     code :  comp.code,
-//   });
+itensToPopulate.forEach(function(comp) {
+  // Create a new Companie object
+  var airport = new Companie({
+    id : comp.id,
+    updated_at :  comp.updated_at,
+    created_at :  comp.created_at,
+    name :  comp.name,
+    code :  comp.code,
+  });
 
-//   // Save to DynamoDB
-//   companie.save();
-// });
+  // Save to DynamoDB
+  companie.save();
+});
 
 // Get
 function companieGet(idvar){

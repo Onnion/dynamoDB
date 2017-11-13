@@ -16,9 +16,12 @@ $ npm install
 ```
 
 ## Restore DB
-### The DB is not provide
+
+#### Use Robomongo
 ```
-mongorestore --drop -d db_name ./ db_path
+$ robo3t-1.1.1-linux-x86_64-c93c6b0/bin/robo3t
+
+$ mongorestore --drop -d db_name ./ db_path
 ```
 
 
@@ -30,9 +33,9 @@ $ npm install dynamoose
 
 -export aws variables
 ```
-export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
-export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
-export AWS_REGION="sa-east-1"
+$ export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
+$ export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
+$ export AWS_REGION="sa-east-1"
 ```
 
 -run createCompanies.js

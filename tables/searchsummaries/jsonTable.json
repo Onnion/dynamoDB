@@ -1,0 +1,451 @@
+[
+    {
+        "id" : "58ed983035cb431fe0390d57",
+        "updated_at" : "2017-04-12T03:00:00.850Z",
+        "created_at" : "2017-04-12T03:00:00.850Z",
+        "company" : "gol",
+        "count_from_cache" : -246,
+        "count" : 3128
+
+    },
+    {
+        "id" : "58ed983035cb431fe0390d58",
+        "updated_at" : "2017-04-12T03:00:00.856Z",
+        "created_at" : "2017-04-12T03:00:00.856Z",
+        "company" : "azul",
+        "count_from_cache" : -168,
+        "count" : 3329
+
+    },
+    {
+        "id" : "58ed983035cb431fe0390d59",
+        "updated_at" : "2017-04-12T03:00:00.857Z",
+        "created_at" : "2017-04-12T03:00:00.857Z",
+        "company" : "avianca",
+        "count_from_cache" : -99,
+        "count" : 1044
+
+    },
+    {
+        "id" : "58ed983035cb431fe0390d5a",
+        "updated_at" : "2017-04-12T03:00:00.857Z",
+        "created_at" : "2017-04-12T03:00:00.857Z",
+        "company" : "latam",
+        "count_from_cache" : -184,
+        "count" : 3200
+
+    },
+    {
+        "id" : "58eee9b07ab67a408c7cbfe5",
+        "updated_at" : "2017-04-13T03:00:00.145Z",
+        "created_at" : "2017-04-13T03:00:00.145Z",
+        "company" : "gol",
+        "count_from_cache" : 241,
+        "count" : 2480
+
+    },
+    {
+        "id" : "58eee9b07ab67a408c7cbfe6",
+        "updated_at" : "2017-04-13T03:00:00.152Z",
+        "created_at" : "2017-04-13T03:00:00.152Z",
+        "company" : "azul",
+        "count_from_cache" : 306,
+        "count" : 2745
+
+    },
+    {
+        "id" : "58eee9b07ab67a408c7cbfe7",
+        "updated_at" : "2017-04-13T03:00:00.153Z",
+        "created_at" : "2017-04-13T03:00:00.153Z",
+        "company" : "avianca",
+        "count_from_cache" : 99,
+        "count" : 824
+
+    },
+    {
+        "id" : "58eee9b07ab67a408c7cbfe8",
+        "updated_at" : "2017-04-13T03:00:00.153Z",
+        "created_at" : "2017-04-13T03:00:00.153Z",
+        "company" : "latam",
+        "count_from_cache" : 308,
+        "count" : 2678
+
+    },
+    {
+        "id" : "58f03b308a136104f4f73060",
+        "updated_at" : "2017-04-14T03:00:00.250Z",
+        "created_at" : "2017-04-14T03:00:00.250Z",
+        "company" : "azul",
+        "count_from_cache" : 375,
+        "count" : 2135
+
+    },
+    {
+        "id" : "58f03b308a136104f4f73061",
+        "updated_at" : "2017-04-14T03:00:00.256Z",
+        "created_at" : "2017-04-14T03:00:00.256Z",
+        "company" : "gol",
+        "count_from_cache" : 293,
+        "count" : 2019
+
+    },
+    {
+        "id" : "58f03b308a136104f4f73062",
+        "updated_at" : "2017-04-14T03:00:00.257Z",
+        "created_at" : "2017-04-14T03:00:00.257Z",
+        "company" : "avianca",
+        "count_from_cache" : 95,
+        "count" : 521
+
+    },
+    {
+        "id" : "58f03b308a136104f4f73063",
+        "updated_at" : "2017-04-14T03:00:00.258Z",
+        "created_at" : "2017-04-14T03:00:00.258Z",
+        "company" : "latam",
+        "count_from_cache" : 373,
+        "count" : 2149
+
+    },
+    {
+        "id" : "58f18cb0502b1904e3037e5d",
+        "updated_at" : "2017-04-15T03:00:00.178Z",
+        "created_at" : "2017-04-15T03:00:00.178Z",
+        "company" : "azul",
+        "count_from_cache" : 30,
+        "count" : 479
+
+    },
+    {
+        "id" : "58f18cb0502b1904e3037e5e",
+        "updated_at" : "2017-04-15T03:00:00.184Z",
+        "created_at" : "2017-04-15T03:00:00.184Z",
+        "company" : "gol",
+        "count_from_cache" : 22,
+        "count" : 429
+
+    },
+    {
+        "id" : "58f18cb0502b1904e3037e5f",
+        "updated_at" : "2017-04-15T03:00:00.185Z",
+        "created_at" : "2017-04-15T03:00:00.185Z",
+        "company" : "avianca",
+        "count_from_cache" : 13,
+        "count" : 116
+
+    },
+    {
+        "id" : "58f18cb0502b1904e3037e60",
+        "updated_at" : "2017-04-15T03:00:00.185Z",
+        "created_at" : "2017-04-15T03:00:00.185Z",
+        "company" : "latam",
+        "count_from_cache" : 36,
+        "count" : 528
+
+    },
+    {
+        "id" : "58f2de301664ef04df0f4862",
+        "updated_at" : "2017-04-16T03:00:00.794Z",
+        "created_at" : "2017-04-16T03:00:00.794Z",
+        "company" : "azul",
+        "count_from_cache" : 188,
+        "count" : 1072
+
+    },
+    {
+        "id" : "58f2de301664ef04df0f4863",
+        "updated_at" : "2017-04-16T03:00:00.800Z",
+        "created_at" : "2017-04-16T03:00:00.800Z",
+        "company" : "avianca",
+        "count_from_cache" : 74,
+        "count" : 343
+
+    },
+    {
+        "id" : "58f2de301664ef04df0f4864",
+        "updated_at" : "2017-04-16T03:00:00.801Z",
+        "created_at" : "2017-04-16T03:00:00.801Z",
+        "company" : "latam",
+        "count_from_cache" : 152,
+        "count" : 1151
+
+    },
+    {
+        "id" : "58f2de301664ef04df0f4865",
+        "updated_at" : "2017-04-16T03:00:00.802Z",
+        "created_at" : "2017-04-16T03:00:00.802Z",
+        "company" : "gol",
+        "count_from_cache" : 138,
+        "count" : 1105
+
+    },
+    {
+        "id" : "58f42fb05dfad504ee5fee76",
+        "updated_at" : "2017-04-17T03:00:00.538Z",
+        "created_at" : "2017-04-17T03:00:00.538Z",
+        "company" : "azul",
+        "count_from_cache" : 37,
+        "count" : 292
+
+    },
+    {
+        "id" : "58f42fb05dfad504ee5fee77",
+        "updated_at" : "2017-04-17T03:00:00.544Z",
+        "created_at" : "2017-04-17T03:00:00.544Z",
+        "company" : "avianca",
+        "count_from_cache" : 12,
+        "count" : 64
+
+    },
+    {
+        "id" : "58f42fb05dfad504ee5fee78",
+        "updated_at" : "2017-04-17T03:00:00.545Z",
+        "created_at" : "2017-04-17T03:00:00.545Z",
+        "company" : "latam",
+        "count_from_cache" : 50,
+        "count" : 347
+
+    },
+    {
+        "id" : "58f42fb05dfad504ee5fee79",
+        "updated_at" : "2017-04-17T03:00:00.546Z",
+        "created_at" : "2017-04-17T03:00:00.546Z",
+        "company" : "gol",
+        "count_from_cache" : 30,
+        "count" : 268
+
+    },
+    {
+        "id" : "58f5813030440a408717cd00",
+        "updated_at" : "2017-04-18T03:00:00.899Z",
+        "created_at" : "2017-04-18T03:00:00.899Z",
+        "company" : "azul",
+        "count_from_cache" : 443,
+        "count" : 3441
+
+    },
+    {
+        "id" : "58f5813030440a408717cd01",
+        "updated_at" : "2017-04-18T03:00:00.905Z",
+        "created_at" : "2017-04-18T03:00:00.905Z",
+        "company" : "gol",
+        "count_from_cache" : 327,
+        "count" : 3122
+
+    },
+    {
+        "id" : "58f5813030440a408717cd02",
+        "updated_at" : "2017-04-18T03:00:00.906Z",
+        "created_at" : "2017-04-18T03:00:00.906Z",
+        "company" : "avianca",
+        "count_from_cache" : 120,
+        "count" : 982
+
+    },
+    {
+        "id" : "58f5813030440a408717cd03",
+        "updated_at" : "2017-04-18T03:00:00.906Z",
+        "created_at" : "2017-04-18T03:00:00.906Z",
+        "company" : "latam",
+        "count_from_cache" : 426,
+        "count" : 3430
+
+    },
+    {
+        "id" : "58f58f44fe60446a7c6d0a40",
+        "updated_at" : "2017-04-18T04:00:04.577Z",
+        "created_at" : "2017-04-18T04:00:04.577Z",
+        "company" : "azul",
+        "count_from_cache" : 444,
+        "count" : 3441
+
+    },
+    {
+        "id" : "58f58f44fe60446a7c6d0a41",
+        "updated_at" : "2017-04-18T04:00:04.599Z",
+        "created_at" : "2017-04-18T04:00:04.599Z",
+        "company" : "gol",
+        "count_from_cache" : 328,
+        "count" : 3122
+
+    },
+    {
+        "id" : "58f58f44fe60446a7c6d0a42",
+        "updated_at" : "2017-04-18T04:00:04.601Z",
+        "created_at" : "2017-04-18T04:00:04.601Z",
+        "company" : "avianca",
+        "count_from_cache" : 120,
+        "count" : 982
+
+    },
+    {
+        "id" : "58f58f44fe60446a7c6d0a43",
+        "updated_at" : "2017-04-18T04:00:04.601Z",
+        "created_at" : "2017-04-18T04:00:04.601Z",
+        "company" : "latam",
+        "count_from_cache" : 427,
+        "count" : 3430
+
+    },
+    {
+        "id" : "58f6d2b08f803304e4f4fc55",
+        "updated_at" : "2017-04-19T03:00:00.447Z",
+        "created_at" : "2017-04-19T03:00:00.447Z",
+        "company" : "azul",
+        "count_from_cache" : 474,
+        "count" : 3348
+
+    },
+    {
+        "id" : "58f6d2b08f803304e4f4fc56",
+        "updated_at" : "2017-04-19T03:00:00.453Z",
+        "created_at" : "2017-04-19T03:00:00.453Z",
+        "company" : "avianca",
+        "count_from_cache" : 183,
+        "count" : 1052
+
+    },
+    {
+        "id" : "58f6d2b08f803304e4f4fc57",
+        "updated_at" : "2017-04-19T03:00:00.453Z",
+        "created_at" : "2017-04-19T03:00:00.453Z",
+        "company" : "latam",
+        "count_from_cache" : 487,
+        "count" : 3493
+
+    },
+    {
+        "id" : "58f6d2b08f803304e4f4fc58",
+        "updated_at" : "2017-04-19T03:00:00.454Z",
+        "created_at" : "2017-04-19T03:00:00.454Z",
+        "company" : "gol",
+        "count_from_cache" : 361,
+        "count" : 3118
+
+    },
+    {
+        "id" : "58f6e0c399edae6a76caf5cc",
+        "updated_at" : "2017-04-19T04:00:03.889Z",
+        "created_at" : "2017-04-19T04:00:03.889Z",
+        "company" : "azul",
+        "count_from_cache" : 474,
+        "count" : 3348
+
+    },
+    {
+        "id" : "58f6e0c399edae6a76caf5cd",
+        "updated_at" : "2017-04-19T04:00:03.903Z",
+        "created_at" : "2017-04-19T04:00:03.903Z",
+        "company" : "avianca",
+        "count_from_cache" : 183,
+        "count" : 1052
+
+    },
+    {
+        "id" : "58f6e0c399edae6a76caf5ce",
+        "updated_at" : "2017-04-19T04:00:03.904Z",
+        "created_at" : "2017-04-19T04:00:03.904Z",
+        "company" : "latam",
+        "count_from_cache" : 487,
+        "count" : 3493
+
+    },
+    {
+        "id" : "58f6e0c399edae6a76caf5cf",
+        "updated_at" : "2017-04-19T04:00:03.909Z",
+        "created_at" : "2017-04-19T04:00:03.909Z",
+        "company" : "gol",
+        "count_from_cache" : 361,
+        "count" : 3118
+
+    },
+    {
+        "id" : "58f82431c6546804db163f21",
+        "updated_at" : "2017-04-20T03:00:01.102Z",
+        "created_at" : "2017-04-20T03:00:01.102Z",
+        "company" : "azul",
+        "count_from_cache" : 402,
+        "count" : 3184
+
+    },
+    {
+        "id" : "58f82431c6546804db163f22",
+        "updated_at" : "2017-04-20T03:00:01.109Z",
+        "created_at" : "2017-04-20T03:00:01.109Z",
+        "company" : "avianca",
+        "count_from_cache" : 150,
+        "count" : 957
+
+    },
+    {
+        "id" : "58f82431c6546804db163f23",
+        "updated_at" : "2017-04-20T03:00:01.110Z",
+        "created_at" : "2017-04-20T03:00:01.110Z",
+        "company" : "latam",
+        "count_from_cache" : 370,
+        "count" : 3099
+
+    },
+    {
+        "id" : "58f82431c6546804db163f24",
+        "updated_at" : "2017-04-20T03:00:01.110Z",
+        "created_at" : "2017-04-20T03:00:01.110Z",
+        "company" : "gol",
+        "count_from_cache" : 305,
+        "count" : 2851
+
+    },
+    {
+        "id" : "58f832452e92c169cd15b97e",
+        "updated_at" : "2017-04-20T04:00:05.139Z",
+        "created_at" : "2017-04-20T04:00:05.139Z",
+        "company" : "azul",
+        "count_from_cache" : 402,
+        "count" : 3184
+
+    },
+    {
+        "id" : "58f832452e92c169cd15b97f",
+        "updated_at" : "2017-04-20T04:00:05.148Z",
+        "created_at" : "2017-04-20T04:00:05.148Z",
+        "company" : "avianca",
+        "count_from_cache" : 150,
+        "count" : 957
+
+    },
+    {
+        "id" : "58f832452e92c169cd15b980",
+        "updated_at" : "2017-04-20T04:00:05.153Z",
+        "created_at" : "2017-04-20T04:00:05.153Z",
+        "company" : "latam",
+        "count_from_cache" : 370,
+        "count" : 3099
+
+    },
+    {
+        "id" : "58f832452e92c169cd15b981",
+        "updated_at" : "2017-04-20T04:00:05.155Z",
+        "created_at" : "2017-04-20T04:00:05.155Z",
+        "company" : "gol",
+        "count_from_cache" : 305,
+        "count" : 2851
+
+    },
+    {
+        "id" : "58f975b0590bd104f6114a3e",
+        "updated_at" : "2017-04-21T03:00:00.274Z",
+        "created_at" : "2017-04-21T03:00:00.274Z",
+        "company" : "gol",
+        "count_from_cache" : 126,
+        "count" : 1023
+
+    },
+    {
+        "id" : "58f975b0590bd104f6114a40",
+        "updated_at" : "2017-04-21T03:00:00.281Z",
+        "created_at" : "2017-04-21T03:00:00.281Z",
+        "company" : "avianca",
+        "count_from_cache" : 91,
+        "count" : 925
+    }
+]
