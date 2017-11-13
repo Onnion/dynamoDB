@@ -13,6 +13,7 @@ $ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 -install node modules
 ```
 $ npm install
+```
 
 ## For dynamoose exemples
 -install dynamosse
