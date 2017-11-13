@@ -89,7 +89,7 @@ function companieGet(idvar){
 // Scan
 function companieScan(origin, destination, company, type, modality){
   var filter = {
-    ProjectionExpression: "#origin, #destination, #company, #type, #modality",
+    ProjectionExpression: "id, #origin, #destination, #company, #type, #modality, created_at",
     FilterExpression: '#origin = :origin and #destination = :destination and #company = :company and #type = :type and #modality = :modality and updated_at between :date1 and :date2',
     ExpressionAttributeValues: {
       ':origin': origin,
@@ -107,6 +107,7 @@ function companieScan(origin, destination, company, type, modality){
         "#type": "type",
         "#modality": "modality"
     },
+    ScanIndexFoward: false
   }
 
   Segments.scan(filter).exec()
