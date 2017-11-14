@@ -42,7 +42,7 @@ var segmentsSchema =  new Schema({
 });
 
 // Create Companie Model
-var Segments = dynamoose.model('Segments', segmentsSchema);
+var Segments = dynamoose.model('Segments', segmentsSchema, [{create: false,update: true}]);
 
 // Populate Table Companie
 // itensToPopulate.forEach(function(seg) {

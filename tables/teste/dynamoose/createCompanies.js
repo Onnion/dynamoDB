@@ -20,11 +20,18 @@ var testeSchema =  new Schema({
   },
   code :  {
     type: String,
+    index: {
+      global: true,
+      rangeKey: 'name',
+      name: 'CodeIndex',
+      project: true, // ProjectionType: ALL
+      throughput: 5 // read and write are both 5
+    }
   }
 });
 
 // Create Companie Model
-var Teste = dynamoose.model('Teste', testeSchema);
+var Teste = dynamoose.model('Teste', testeSchema,{create: false, update: true });
 
 //Populate Table Companie
 itensToPopulate.forEach(function(comp) {
@@ -51,39 +58,55 @@ function companieGet(idvar){
 }
 
 // Query
-function companieGet(idvar){
-  Companie.get(idvar).then(function(companie){
-    console.log(companie);
+function companieQuery(){
+  var paramsQuery = {
+    IndexName: "CodeIndex",
+    ProjectionExpression: "#id, created_at, code",
+    FilterExpression: '#code = :code',
+    ExpressionAttributeValues: {
+      ':code': 'qq'
+    },
+    ExpressionAttributeNames: {
+        "#id": "id",
+        '#code': 'code'
+    },
+    ScanIndexForward: false
+  }
 
-  }).catch(function(err){
-    console.log(err);
-
+  Teste.query(paramsQuery, (err, data) => {
+    if (err) {
+      console.log(err);
+    }else if(data) {
+      console.log(data);
+    }
   })
 }
 
 // Scan
 function companieScan(){
   var filter = {
-    ProjectionExpression: "#id, created_at",
+    IndexName: "CodeIndex",
+    ProjectionExpression: "#id, created_at, code",
     FilterExpression: '#code = :code',
     ExpressionAttributeValues: {
-      ':code': 'tt'
+      ':code': 'qq'
     },
     ExpressionAttributeNames: {
         "#id": "id",
         '#code': 'code'
     },
+    ScanIndexForward: false
   }
 
-  Teste.scan(filter).not().exec()
-  .then(function(companies) {
+  Teste.scan(filter).exec()
+  .then((companies) => {
     console.log(companies);
   })
-  .catch(function(err) {
+  .catch((err) => {
     console.error(err);
   });
+
 };
 
-
-companieScan();
+companieQuery();
 //companieGet('58d02b9b7a343d148a8f7a30');
