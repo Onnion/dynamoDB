@@ -2,6 +2,13 @@ var dynamoose = require('dynamoose');
 var Schema = dynamoose.Schema;
 var itensToPopulate = require( "../jsonTable.json" )
 
+var keys = require("../../../keys.json")
+dynamoose.AWS.config.update({
+  accessKeyId: keys.acess,
+  secretAccessKey: keys.secret,
+  region: 'sa-east-1'
+});
+
 // Create Companie Schema
 var searchSummariesSchema =  new Schema({
   id : {
@@ -25,7 +32,6 @@ var searchSummariesSchema =  new Schema({
   }
 });
 
-
 // Create Companie Model
 var SearchSummaries = dynamoose.model('SearchSummaries', searchSummariesSchema);
 
@@ -43,11 +49,10 @@ itensToPopulate.forEach(function(summary) {
 
   // Save to DynamoDB
   searchSummary.save();
-  console.log('put in table');
 });
 
 // Get
-function companieGet(idvar){
+function searchSummaryGet(idvar){
   Companie.get(idvar).then(function(companie){
     console.log(companie);
   }).catch(function(err){
@@ -56,27 +61,25 @@ function companieGet(idvar){
 }
 
 // Query
-function companieGet(idvar){
+function searchSummaryQuery(){
   Companie.get(idvar).then(function(companie){
     console.log(companie);
-
   }).catch(function(err){
     console.log(err);
-
   })
 }
 
 // Scan
-function companieScan(data1, data2){
+function searchSummaryScan(){
   var filter = {
     FilterExpression: 'created_at between :date1 AND :date2',
     ExpressionAttributeValues: {
-      ':date1': data1,
-      ':date2': data2
+      // ':date1': data1,
+      // ':date2': data2
     }
   }
 
-  Companie.scan(filter).not().exec()
+  SearchSummaries.scan().not().exec()
   .then(function(companie) {
     console.log(companie);
   })
@@ -85,5 +88,5 @@ function companieScan(data1, data2){
   });
 };
 
-//companieScan('2017-03-10T19:20:29.257Z','2017-12-12T19:20:59.254Z');
+searchSummaryScan();
 //companieGet('58d02b9b7a343d148a8f7a30');
