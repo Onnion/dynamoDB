@@ -1,7 +1,5 @@
 # dynamoDB
 
-//to save https://www.safe.com/fme/fme-desktop/trial-download/
-
 
 -download dynamoDB local version:  
  http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html#DynamoDBLocal.DownloadingAndRunning
