@@ -1,6 +1,7 @@
 var dynamoose = require('dynamoose');
 var Schema = dynamoose.Schema;
 var itensToPopulate = require( "../jsonTable.json" )
+var Promise = require('promise');
 
 var keys = require("../../../keys.json")
 dynamoose.AWS.config.update({
@@ -83,12 +84,16 @@ function searchSummaryGet(idvar){
 }
 
 // Query
-
 function searchSummaryQuery(){
   SearchSummariesSS.query('company').eq('azul')
   .filter('count')
-  .between(200,2000)
-  .descending()
+  .between(200,5000)
+  .and()
+  .filter('updated_at')
+  .beginsWith('2017')
+  .and()
+  .filter('count_from_cache')
+  .gt(443)
   .exec().then((dogs) => {
     console.log(dogs);
   })
@@ -100,15 +105,26 @@ function searchSummaryQuery(){
 // Scan
 function searchSummaryScan(){
   var filter = {
-    FilterExpression: 'created_at between :date1 AND :date2',
+    FilterExpression: 
+    'begins_with(updated_at, :time)'+ ' and '+
+    'count_from_cache > :count'+' and '+
+    '#count between :count1 AND :count2',
     ExpressionAttributeValues: {
-      // ':date1': data1,
-      // ':date2': data2
+      ':time': "2017",
+      ':count' : 443,
+      ':count1' : 200,
+      ':count2' : 5000,
+    },
+    ExpressionAttributeNames:{
+      "#count": "count"
     }
   }
-
-  SearchSummaries.scan().exec()
+  SearchSummariesSS.scan(filter).exec()
   .then(function(companie) {
+    //return promisse
+    // return new Promise((resolve, reject) => {
+    //   resolve(companie);
+    // });
     console.log(companie);
   })
   .catch(function(err) {
@@ -116,5 +132,8 @@ function searchSummaryScan(){
   });
 };
 
-searchSummaryQuery();
-//companieGet('58d02b9b7a343d148a8f7a30');
+
+//run query
+searchSummaryScan();
+//subscribe promisse
+//searchSummaryScan().then((list) => {console.log(list)})
