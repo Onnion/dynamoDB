@@ -2,6 +2,13 @@ var dynamoose = require('dynamoose');
 var Schema = dynamoose.Schema;
 var itensToPopulate = require( "../jsonTable.json" )
 
+var keys = require("../../../keys.json")
+dynamoose.AWS.config.update({
+  accessKeyId: keys.acess,
+  secretAccessKey: keys.secret,
+  region: 'sa-east-1'
+});
+
 // Create Companie Schema
 var segmentsSchema =  new Schema({
   id : {
@@ -97,8 +104,8 @@ function companieScan(origin, destination, company, type, modality){
       ':company': company,
       ':type': type,
       ':modality': modality,
-      ':date2': '2017-07-17T17:50:02.372Z',
-      ':date1': '2017-05-24T18:34:45.476Z'
+      ':date1': '2017-05-24T18:34:45.476Z',
+      ':date2': '2017-07-17T17:50:02.372Z'
     },
     ExpressionAttributeNames: {
         "#origin": "origin",

@@ -1,40 +1,64 @@
 var dynamoose = require('dynamoose');
+var should = require('should');
 var Schema = dynamoose.Schema;
 var itensToPopulate = [
-  {ownerId:1, name: 'Foxy Lady', breed: 'Jack Russell Terrier ', color: ['White', 'Brown', 'Black']},
-  {ownerId:2, name: 'Quincy', breed: 'Jack Russell Terrier', color: ['White', 'Brown']},
-  {ownerId:2, name: 'Princes', breed: 'Jack Russell Terrier', color: ['White', 'Brown']},
-  {ownerId:3, name: 'Toto', breed: 'Terrier', color: ['Brown']},
-  {ownerId:4, name: 'Odie', breed: 'Beagle', color: ['Tan'], cartoon: true},
-  {ownerId:5, name: 'Pluto', breed: 'unknown', color: ['Mustard'], cartoon: true},
-  {ownerId:6, name: 'Brian Griffin', breed: 'unknown', color: ['White']},
-  {ownerId:7, name: 'Scooby Doo', breed: 'Great Dane', cartoon: true},
-  {ownerId:8, name: 'Blue', breed: 'unknown', color: ['Blue'], cartoon: true},
-  {ownerId:9, name: 'Lady', breed: ' Cocker Spaniel', cartoon: true},
-  {ownerId:10, name: 'Copper', breed: 'Hound', cartoon: true},
-  {ownerId:11, name: 'Old Yeller', breed: 'unknown', color: ['Tan']},
-  {ownerId:12, name: 'Hooch', breed: 'Dogue de Bordeaux', color: ['Brown']},
+  {ownerId:1, name: 'Foxy Lady', breed: 'Jack Russell Terrier', color: 'White, Brown and Black', siblings: ['Quincy', 'Princes']},
+  {ownerId:2, name: 'Quincy', breed: 'Jack Russell Terrier', color: 'White and Brown', siblings: ['Foxy Lady', 'Princes']},
+  {ownerId:2, name: 'Princes', breed: 'Jack Russell Terrier', color: 'White and Brown', siblings: ['Foxy Lady', 'Quincy']},
+  {ownerId:3, name: 'Toto', breed: 'Terrier', color: 'Brown'},
+  {ownerId:4, name: 'Oddie', breed: 'beagle', color: 'Tan'},
+  {ownerId:5, name: 'Pluto', breed: 'unknown', color: 'Mustard'},
+  {ownerId:6, name: 'Brian Griffin', breed: 'unknown', color: 'White'},
+  {ownerId:7, name: 'Scooby Doo', breed: 'Great Dane'},
+  {ownerId:8, name: 'Blue', breed: 'unknown', color: 'Blue'},
+  {ownerId:9, name: 'Lady', breed: ' Cocker Spaniel'},
+  {ownerId:10, name: 'Copper', breed: 'Hound'},
+  {ownerId:11, name: 'Old Yeller', breed: 'unknown', color: 'Tan'},
+  {ownerId:12, name: 'Hooch', breed: 'Dogue de Bordeaux', color: 'Brown'},
   {ownerId:13, name: 'Rin Tin Tin', breed: 'German Shepherd'},
   {ownerId:14, name: 'Benji', breed: 'unknown'},
-  {ownerId:15, name: 'Wishbone', breed: 'Jack Russell Terrier', color: ['White']},
-  {ownerId:16, name: 'Marley', breed: 'Labrador Retriever', color: ['Yellow']},
+  {ownerId:15, name: 'Wishbone', breed: 'Jack Russell Terrier', color: 'White'},
+  {ownerId:16, name: 'Marley', breed: 'Labrador Retriever', color: 'Yellow'},
   {ownerId:17, name: 'Beethoven', breed: 'St. Bernard'},
-  {ownerId:18, name: 'Lassie', breed: 'Collie', color: ['tan', 'white']},
-  {ownerId:19, name: 'Snoopy', breed: 'Beagle', color: ['black', 'white'], cartoon: true}];
+  {ownerId:18, name: 'Lassie', breed: 'Collie', color: 'tan and white'},
+  {ownerId:19, name: 'Snoopy', breed: 'beagle', color: 'black and white'},
+  {ownerId:20, name: 'Max', breed: 'Westie'},
+  {ownerId:20, name: 'Gigi', breed: 'Spaniel', color: 'Chocolate'},
+  {ownerId:20, name: 'Mimo', breed: 'Boxer', color: 'Chocolate'},
+  {ownerId:20, name: 'Bepo', breed: 'French Bulldog', color: 'Grey'}
+];
+
+var keys = require("../../../keys.json")
+dynamoose.AWS.config.update({
+  accessKeyId: keys.acess,
+  secretAccessKey: keys.secret,
+  region: 'sa-east-1'
+});
+
 // Create Companie Schema
 var dogSchema  = new Schema({
   ownerId: {
     type: Number,
     validate: function(v) { return v > 0; },
-    hashKey: true
+    hashKey: true,
+    index: [{
+      global: true,
+      rangeKey: 'color',
+      name: 'ColorRangeIndex',
+      project: true, // ProjectionType: ALL
+    },{
+      global: true,
+      rangeKey: 'breed',
+      name: 'BreedRangeIndex',
+      project: true, // ProjectionType: ALL
+    }]
   },
   breed: {
     type: String,
-    trim: true,
     required: true,
     index: {
       global: true,
-      rangeKey: 'ownerId',
+      rangeKey: 'name',
       name: 'BreedIndex',
       project: true, // ProjectionType: ALL
       throughput: 5 // read and write are both 5
@@ -43,42 +67,43 @@ var dogSchema  = new Schema({
   name: {
     type: String,
     rangeKey: true,
-    index: {
-      global: true,
-      rangeKey: 'ownerId',
-      name: 'NameIndex',
-      project: true, // ProjectionType: ALL
-      throughput: 5 // read and write are both 5
-    }
+    index: true // name: nameLocalIndex, ProjectionType: ALL
   },
   color: {
-    lowercase: true,
-    type: [String],
-    default: ['Brown']
+    type: String,
+    default: 'Brown',
+    index: [{ // name: colorLocalIndex
+      project: ['name'] // ProjectionType: INCLUDE
+    },{ // name: colorGlobalIndex, no ragne key
+      global: true,
+      project: ['name'] // ProjectionType: INCLUDE
+    }]
   },
-  cartoon: {
-    type: Boolean
+  siblings: {
+    type: 'list',
+    list: [ {
+      type: String
+    } ]
   }
 });
 
 // Create Companie Model
-var TesteDog = dynamoose.model('Teste', dogSchema,{update: true });
+var TesteDogDog = dynamoose.model('TesteDogDog', dogSchema,{update: true });
 
 //Populate Table Companie
 itensToPopulate.forEach(function(comp) {
   // Create a new Companie object
-  var companie = new TesteDog({
-    id : comp.id,
-    updated_at :  comp.updated_at,
-    created_at :  comp.created_at,
+  var companie = new TesteDogDog({
+    ownerId : comp.ownerId,
+    breed :  comp.breed,
     name :  comp.name,
-    code :  comp.code,
+    color :  comp.color,
+    siblings :  comp.siblings
   });
-
 
   // Save to DynamoDB
   companie.save();
-  console.log('put');
+  //console.log('put');
 });
 
 // Get
@@ -90,48 +115,49 @@ function companieGet(idvar){
   })
 }
 
+// BatchGet
+function companieBatch(){
+  TesteDogDog.batchGet([{ownerId: 4, name: 'Oddie'},{ownerId: 6, name: 'Brian Griffin'}], function (err, dogs) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(dogs);
+  });
+}
+
 // Query
 function companieQuery(){
-  var paramsQuery = {
-    IndexName: "CodeIndex",
-    ProjectionExpression: "#id, created_at, code",
-    FilterExpression: '#code = :code',
-    ExpressionAttributeValues: {
-      ':code': 'qq'
-    },
-    ExpressionAttributeNames: {
-        "#id": "id",
-        '#code': 'code'
-    },
-    ScanIndexForward: false
-  }
-
-  Teste.query(paramsQuery, (err, data) => {
-    if (err) {
-      console.log(err);
-    }else if(data) {
-      console.log(data);
-    }
+  //should.not.exist(err);
+  //dogs.length.should.eql(1);
+  //dogs[0].name.should.eql('Gigi');
+  TesteDogDog.query('breed').eq('Jack Russell Terrier')
+  .filter('color')
+  .contains('Brown')
+  .and()
+  .filter('siblings')
+  .contains('Quincy')
+  .descending()
+  .exec().then((dogs) => {
+    console.log(dogs);
   })
-}
+  .catch((err) => {
+    console.log(err);
+  });
+};
 
 // Scan
 function companieScan(){
   var filter = {
-    IndexName: "CodeIndex",
-    ProjectionExpression: "#id, created_at, code",
-    FilterExpression: '#code = :code',
+    IndexName: "BreedIndex",
+    ProjectionExpression: "ownerId",
+    FilterExpression: 'breed = :code',
     ExpressionAttributeValues: {
-      ':code': 'qq'
+      ':code': 'Jack Russell Terrier'
     },
-    ExpressionAttributeNames: {
-        "#id": "id",
-        '#code': 'code'
-    },
-    ScanIndexForward: false
+    ScanIndexForward: true
   }
 
-  Teste.scan(filter).exec()
+  TesteDogDog.scan().exec()
   .then((companies) => {
     console.log(companies);
   })
@@ -141,5 +167,6 @@ function companieScan(){
 
 };
 
-//companieQuery();
+
+companieQuery();
 //companieGet('58d02b9b7a343d148a8f7a30');

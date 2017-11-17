@@ -18,12 +18,13 @@ $ npm install
 ## Restore DB
 #### Use Robomongo
 ```
-$ robo3t-1.1.1-linux-x86_64-c93c6b0/bin/robo3t
 $ sudo service mongod start
 $ mongo
+
+$ robo3t-1.1.1-linux-x86_64-c93c6b0/bin/robo3t
+
 $ mongorestore --drop -d db_name ./ db_path
 ```
-
 
 ## For dynamoose exemples
 -install dynamosse
