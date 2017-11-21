@@ -12,28 +12,12 @@ dynamoose.AWS.config.update({
 
 // Create Companie Schema
 var searchSummariesSchema =  new Schema({
-  id : {
-    type: String,
-    hashKey: true,
-    index: [{
-      global: true,
-      rangeKey: 'count',
-      name: 'CountRangeIndex',
-      project: true, // ProjectionType: ALL
-    },{
-      global: true,
-      rangeKey: 'company',
-      name: 'CompanyRangeIndex',
-      project: true, // ProjectionType: ALL
-    }]
-  },
   updated_at:  {
     type: String,
   },
   created_at :  {
     type: String,
-    rangeKey: true,
-    index: true
+    rangeKey: true
   },
   company :  {
     type: String,
@@ -47,11 +31,18 @@ var searchSummariesSchema =  new Schema({
   },
   count_from_cache :  {
     type: Number,
+    required: false,
+    default: 0
+  },
+  avg_duration: {
+    type: Number,
+    required: false,
+    default: 0
   },
   count :  {
     type: Number,
-    rangeKey: true,
-    index: true 
+    required: false,
+    default: 0
   }
 });
 
@@ -62,12 +53,12 @@ var SearchSummariesSS = dynamoose.model('SearchSummaries', searchSummariesSchema
 itensToPopulate.forEach(function(summary) {
   // Create a new Companie object
   var searchSummary = new SearchSummariesSS({
-    id : summary.id,
     updated_at :  summary.updated_at,
     created_at :  summary.created_at,
     company :  summary.company,
     count_from_cache :  summary.count_from_cache,
-    count : summary.count
+    count : summary.count,
+    avg_duration: summary.avg_duration
   });
 
   // Save to DynamoDB
