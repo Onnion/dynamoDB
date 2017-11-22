@@ -2,6 +2,7 @@ var dynamoose = require('dynamoose');
 var Schema = dynamoose.Schema;
 var itensToPopulate = require( "../jsonTable.json" )
 var Promise = require('promise');
+var moment = require("moment");
 
 var keys = require("../../../keys.json")
 dynamoose.AWS.config.update({
@@ -21,13 +22,13 @@ var searchSummariesSchema =  new Schema({
   },
   company :  {
     type: String,
-    index: {
+    hashKey: true,
+    index: [{
       global: true,
-      rangeKey: 'created_at',
-      name: 'CompanyIndex',
-      project: true,
-      throughput: 5
-    }
+      rangeKey: 'count',
+      name: 'CountRangeIndex',
+      project: true
+    }]
   },
   count_from_cache :  {
     type: Number,
@@ -42,49 +43,38 @@ var searchSummariesSchema =  new Schema({
   count :  {
     type: Number,
     required: false,
-    default: 0
+    default: 0,
+    index: true
   }
 });
 
 // Create Companie Model
-var SearchSummariesSS = dynamoose.model('SearchSummaries', searchSummariesSchema,{update: true });
+var searchsummary = dynamoose.model('SearchSummaries', searchSummariesSchema,{update: true });
 
-// Populate Table Companie
-itensToPopulate.forEach(function(summary) {
-  // Create a new Companie object
-  var searchSummary = new SearchSummariesSS({
-    updated_at :  summary.updated_at,
-    created_at :  summary.created_at,
-    company :  summary.company,
-    count_from_cache :  summary.count_from_cache,
-    count : summary.count,
-    avg_duration: summary.avg_duration
+// Populate Model SearchSummary
+function populateSearchSummariesModel(){
+  itensToPopulate.forEach(function(summary) {
+    // Create a new Companie object
+    var searchSummary = new searchsummary({
+      updated_at :  summary.updated_at,
+      created_at :  summary.created_at,
+      company :  summary.company,
+      count_from_cache :  summary.count_from_cache,
+      count : summary.count,
+      avg_duration: summary.avg_duration
+    });
+  
+    // Save to DynamoDB
+    searchSummary.save().then(() => {
+      console.log('saved');
+    });
   });
-
-  // Save to DynamoDB
-  searchSummary.save();
-});
-
-// Get
-function searchSummaryGet(idvar){
-  Companie.get(idvar).then(function(companie){
-    console.log(companie);
-  }).catch(function(err){
-    console.log(err);
-  })
 }
 
 // Query
-function searchSummaryQuery(){
-  SearchSummariesSS.query('company').eq('azul')
-  .filter('count')
-  .between(200,5000)
-  .and()
-  .filter('updated_at')
-  .beginsWith('2017')
-  .and()
-  .filter('count_from_cache')
-  .gt(443)
+function searchSummaryQuery(company){
+  SearchSummaries.query('company').eq(company)
+  
   .exec().then((dogs) => {
     console.log(dogs);
   })
@@ -92,6 +82,17 @@ function searchSummaryQuery(){
     console.log(err);
   });
 }
+
+// GetAll
+function searchSummaryGetAll(){
+  searchsummary.scan().exec()
+  .then(function(companie) {
+    console.log(companie);
+  })
+  .catch(function(err) {
+    console.error(err);
+  });
+};
 
 // Scan
 function searchSummaryScan(){
@@ -110,12 +111,8 @@ function searchSummaryScan(){
       "#count": "count"
     }
   }
-  SearchSummariesSS.scan(filter).exec()
+  SearchSummaries.scan(filter).exec()
   .then(function(companie) {
-    //return promisse
-    // return new Promise((resolve, reject) => {
-    //   resolve(companie);
-    // });
     console.log(companie);
   })
   .catch(function(err) {
@@ -124,7 +121,6 @@ function searchSummaryScan(){
 };
 
 
-//run query
-searchSummaryScan();
-//subscribe promisse
-//searchSummaryScan().then((list) => {console.log(list)})
+// Steps to work
+populateSearchSummariesModel();
+searchSummaryGetAll();
