@@ -2,13 +2,14 @@
   "name": "marcio",
   "version": "1.0.0",
   "description": "",
-  "main": "teste.js",
+  "main": "dailySearchReportJob.js",
   "dependencies": {
     "aws": "0.0.3-2",
     "aws-sdk": "^2.148.0",
     "bluebird": "^3.5.1",
     "cheerio": "^1.0.0-rc.2",
     "dynamoose": "^0.8.6",
+    "moment": "^2.19.2",
     "mongoose": "^4.13.1",
     "promise": "^8.0.1",
     "request": "^2.83.0",
@@ -18,6 +19,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Marcio Henrique",
   "license": "ISC"
 }
