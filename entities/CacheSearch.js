@@ -3,8 +3,11 @@
 const dynamoose = require('dynamoose');
 const moment = require('moment');
 const Hache = require('hache');
+const itensToPopulate = require('./json/cachesearch/cachesearch.json')
+const Schema = dynamoose.Schema;
 
-const keys = require("../../../keys.json")
+
+const keys = require("../keys.json")
 dynamoose.AWS.config.update({
       accessKeyId: keys.acess,
       secretAccessKey: keys.secret,
@@ -12,18 +15,18 @@ dynamoose.AWS.config.update({
 });
 
 // Create Companie Schema
-const cacheSearchchema = new dynamoose.Schema({
+const cacheSearchchema = new Schema({
+      cache_id: {
+            type: String,
+            hashKey: true,
+            required: true
+      },
       updated_at: {
             type: String,
       },
       created_at: {
             type: String,
             rangeKey: true
-      },
-      cache_id: {
-            type: String,
-            hashKey: true,
-            required: true
       },
       uses: {
             type: Number,
@@ -41,7 +44,7 @@ const cacheSearchchema = new dynamoose.Schema({
       }
 });
 
-cacheSearchchema.methods.generateCacheId = function (search) {
+function generateCacheId (search) {
 
       var hache = new Hache('md5');
 
@@ -64,7 +67,7 @@ cacheSearchchema.methods.generateCacheId = function (search) {
 
 };
 
-CacheSearch.methods.addCache = function (result) {
+cacheSearchchema.methods.addCache = function (result) {
 
       this.search = result.search;
       this.flights = result.flights;
@@ -108,7 +111,7 @@ let normalizeFlights = function (flights) {
       return newFlights;
 };
 
-CacheSearch.methods.normalizeCache = function () {
+cacheSearchchema.methods.normalizeCache = function () {
 
       var flights = normalizeFlights(this.flights);
       var flights_back = normalizeFlights(this.flights_back);
@@ -121,15 +124,32 @@ CacheSearch.methods.normalizeCache = function () {
 
 };
 
+// Export CacheSearch Model
+//module.exports = dynamoose.model('CacheSearch', cacheSearchchema);
+
+
+
+
+
+
+
+
+
+
+
+// Testing
+let CacheSearch = dynamoose.model('cachetest', cacheSearchchema, { update: true });
+
 // Populate Model CacheSearch
 function populateCacheSearchModel() {
-
+      
       var cont = 0
 
       itensToPopulate.forEach(function (summary) {
 
             // Create a new object
-            var searchSummary = new cacheSearch({
+            var searchSummary = new CacheSearch({
+
                   cache_id: summary.cache_id,
                   uses: summary.uses,
                   search: summary.search,
@@ -153,5 +173,15 @@ function populateCacheSearchModel() {
       });
 }
 
-// Export CacheSearch Model
-module.exports = dynamoose.model('CacheSearch', cacheSearchchema);
+populateCacheSearchModel();
+CacheSearch.query('cache_id').eq('Q-mrvCz0874DhJUxr3pePQ').exec().then( (res) => {
+      console.log('res',res);
+}).catch( (err) => {
+      console.log('err',err);
+});
+
+
+
+
+
+

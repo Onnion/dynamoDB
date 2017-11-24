@@ -1,18 +1,10 @@
 'use strict'
 
 const dynamoose = require('dynamoose');
-const itensToPopulate = require("../jsonTable.json")
-const Promise = require('promise');
-
-const keys = require("../../../keys.json")
-dynamoose.AWS.config.update({
-  accessKeyId: keys.acess,
-  secretAccessKey: keys.secret,
-  region: 'sa-east-1'
-});
+const itensToPopulate = require("./jsonTable.json")
 
 // Create SearchSummary Schema
-var searchSummariesSchema = new dynamoose.Schema({
+var searchSummarySchema = new dynamoose.Schema({
   updated_at: {
     type: String,
   },
@@ -39,13 +31,8 @@ var searchSummariesSchema = new dynamoose.Schema({
     required: false,
     default: 0,
     index: true
-  },
-  throughput: {
-    read: 100000,
-    write: 100000
   }
 });
-
 
 // Populate Model SearchSummary
 function populateSearchSummariesModel() {
@@ -78,4 +65,4 @@ function populateSearchSummariesModel() {
 }
 
 // Export Companie Model
-module.exports = dynamoose.model('SearchSummary', searchSummariesSchema);
+module.exports = dynamoose.model('SearchSummary', searchSummarySchema);
